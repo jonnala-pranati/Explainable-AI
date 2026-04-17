@@ -1,0 +1,87 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+
+from app.core.config import settings
+from app.core.logging import setup_logging, get_logger
+from app.ml_bridge.model_loader import model_loader
+from app.ml_bridge.inference import inference_engine
+from app.api.routes import predict, explain, health
+
+# Setup logging
+setup_logging()
+logger = get_logger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifespan context manager for startup and shutdown events.
+    Loads models at startup to ensure single-time loading.
+    """
+    # Startup
+    logger.info("Starting up Explainable AI Lite API...")
+    try:
+        # Load ML models (singleton pattern - loads once)
+        model_loader.load_models()
+        
+        # Initialize inference engine
+        inference_engine.initialize()
+        
+        logger.info("Models loaded and inference engine initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to load models: {e}")
+        raise
+    
+    yield
+    
+    # Shutdown
+    logger.info("Shutting down Explainable AI Lite API...")
+
+
+# Create FastAPI application
+app = FastAPI(
+    title=settings.API_TITLE,
+    version=settings.API_VERSION,
+    lifespan=lifespan,
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for development
+    allow_credentials=False,  # Must be False when using wildcard origins
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(predict.router, prefix=settings.API_PREFIX)
+app.include_router(explain.router, prefix=settings.API_PREFIX)
+app.include_router(health.router, prefix=settings.API_PREFIX)
+
+
+@app.get("/")
+async def root():
+    """Root endpoint with API information."""
+    return {
+        "name": settings.API_TITLE,
+        "version": settings.API_VERSION,
+        "status": "running",
+        "docs": "/docs",
+        "health": f"{settings.API_PREFIX}/health"
+    }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    
+    uvicorn.run(
+        "app.main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level=settings.LOG_LEVEL.lower()
+    )
