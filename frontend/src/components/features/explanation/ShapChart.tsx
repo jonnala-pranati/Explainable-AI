@@ -3,9 +3,9 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 import type { ShapExplanation } from "@/services/api";
 
 export default function ShapChart({ data }: { data: ShapExplanation }) {
-  const chartData = data.features.map((f) => ({
-    word: f.word,
-    importance: parseFloat(f.importance.toFixed(3)),
+  const chartData = data.explanation.map((f) => ({
+    word: f.feature,
+    importance: parseFloat(f.value.toFixed(3)),
   }));
 
   return (

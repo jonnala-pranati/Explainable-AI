@@ -14,7 +14,7 @@ export default function RuleExplainer({ data }: { data: RuleExplanation }) {
         Rule-Based Explanation
       </h3>
       <ul className="space-y-3 mb-6">
-        {data.rules.map((rule, i) => (
+        {data.explanation.map((rule, i) => (
           <motion.li
             key={i}
             initial={{ opacity: 0, x: -10 }}
@@ -23,7 +23,7 @@ export default function RuleExplainer({ data }: { data: RuleExplanation }) {
             className="flex items-start gap-3 text-sm"
           >
             <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-            <span className="text-muted-foreground">{rule}</span>
+            <span className="text-muted-foreground">{rule.rule}</span>
           </motion.li>
         ))}
       </ul>

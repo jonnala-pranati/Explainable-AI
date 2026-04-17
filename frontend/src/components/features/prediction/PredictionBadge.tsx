@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import type { PredictionResult } from "@/services/api";
 
 export default function PredictionBadge({ prediction }: { prediction: PredictionResult }) {
-  const isPositive = prediction.label === "Positive";
+  const isPositive = prediction.prediction === "POSITIVE";
 
   return (
     <motion.div
@@ -20,7 +20,7 @@ export default function PredictionBadge({ prediction }: { prediction: Prediction
         }`}
       >
         <span className={`w-2.5 h-2.5 rounded-full ${isPositive ? "bg-emerald-400" : "bg-rose-400"}`} />
-        {prediction.label}
+        {prediction.prediction}
       </div>
       <p className="text-sm text-muted-foreground mt-3">
         Confidence: <span className="text-foreground font-medium">{(prediction.confidence * 100).toFixed(1)}%</span>

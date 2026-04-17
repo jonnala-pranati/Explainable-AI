@@ -74,7 +74,7 @@ export default function Analyze() {
                     {shap && <ShapChart data={shap} />}
                     {lime && <LimeHighlights data={lime} />}
                     {rule && <RuleExplainer data={rule} />}
-                    {shap && <WordImportanceTable features={shap.features} />}
+                    {shap && <WordImportanceTable features={shap.explanation} />}
                   </motion.div>
                 )}
               </AnimatePresence>

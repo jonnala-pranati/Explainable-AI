@@ -19,17 +19,20 @@ export default function LimeHighlights({ data }: { data: LimeExplanation }) {
         LIME Text Explanation
       </h3>
       <div className="flex flex-wrap gap-1.5 leading-loose">
-        {data.highlights.map((h, i) => (
-          <motion.span
-            key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.05 * i, duration: 0.3 }}
-            className={`inline-block px-2 py-0.5 rounded-md text-sm font-medium ${sentimentColors[h.sentiment]}`}
-          >
-            {h.word}
-          </motion.span>
-        ))}
+        {data.explanation.map((h, i) => {
+          const sentiment = h.weight > 0 ? "positive" : h.weight < 0 ? "negative" : "neutral";
+          return (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.05 * i, duration: 0.3 }}
+              className={`inline-block px-2 py-0.5 rounded-md text-sm font-medium ${sentimentColors[sentiment]}`}
+            >
+              {h.word}
+            </motion.span>
+          );
+        })}
       </div>
       <div className="flex gap-4 mt-6 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-emerald-500/30" /> Positive</span>

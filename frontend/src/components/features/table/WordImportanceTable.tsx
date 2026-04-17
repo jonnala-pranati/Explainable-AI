@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import type { ShapExplanation } from "@/services/api";
+import type { ExplanationFeature } from "@/services/api";
 
-export default function WordImportanceTable({ features }: { features: ShapExplanation["features"] }) {
-  if (!features.length) return null;
+export default function WordImportanceTable({ features }: { features: ExplanationFeature[] }) {
+  if (!features || !features.length) return null;
 
   return (
     <motion.div
@@ -26,14 +26,14 @@ export default function WordImportanceTable({ features }: { features: ShapExplan
           <tbody>
             {features.slice(0, 8).map((f, i) => (
               <tr key={i} className="border-b border-border/10">
-                <td className="py-2.5 font-medium">{f.word}</td>
-                <td className="py-2.5 text-right font-mono text-xs">{f.importance.toFixed(4)}</td>
+                <td className="py-2.5 font-medium">{f.feature}</td>
+                <td className="py-2.5 text-right font-mono text-xs">{f.value.toFixed(4)}</td>
                 <td className="py-2.5 pl-4">
                   <div className="flex items-center gap-2">
                     <div className="w-20 h-1.5 bg-background/50 rounded-full overflow-hidden">
                       <div
-                        className={`h-full rounded-full ${f.importance >= 0 ? "bg-primary" : "bg-destructive"}`}
-                        style={{ width: `${Math.min(Math.abs(f.importance) * 200, 100)}%` }}
+                        className={`h-full rounded-full ${f.value >= 0 ? "bg-primary" : "bg-destructive"}`}
+                        style={{ width: `${Math.min(Math.abs(f.value) * 200, 100)}%` }}
                       />
                     </div>
                   </div>
