@@ -1,5 +1,5 @@
 from typing import Dict, Any, List
-from app.ml_bridge.inference import inference_engine
+from services.ml_service import ml_service
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -9,7 +9,7 @@ class PredictionService:
     """Service layer for prediction operations."""
     
     def __init__(self):
-        self.inference = inference_engine
+        self.ml = ml_service
     
     def predict(self, text: str) -> Dict[str, Any]:
         """
@@ -24,19 +24,10 @@ class PredictionService:
         try:
             logger.info(f"Processing prediction request for text length: {len(text)}")
             
-            # Run prediction
-            prediction, confidence = self.inference.predict(text)
+            # Run prediction using ML service
+            result = self.ml.predict(text)
             
-            # Extract top features
-            top_features = self.inference.extract_top_features(text)
-            
-            result = {
-                "prediction": prediction,
-                "confidence": confidence,
-                "top_features": top_features
-            }
-            
-            logger.info(f"Prediction completed: {prediction} with confidence {confidence:.4f}")
+            logger.info(f"Prediction completed: {result['prediction']} with confidence {result['confidence']:.4f}")
             return result
             
         except Exception as e:

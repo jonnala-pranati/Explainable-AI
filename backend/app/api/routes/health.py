@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 from app.models.schema import HealthResponse
-from app.ml_bridge.model_loader import model_loader
+from services.ml_service import ml_service
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -24,7 +24,7 @@ async def health_check() -> HealthResponse:
     """
     try:
         # Check if models are loaded
-        if model_loader.is_loaded():
+        if ml_service.model is not None:
             logger.info("Health check: Service healthy, models loaded")
             return HealthResponse(status="ok")
         else:

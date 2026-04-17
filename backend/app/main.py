@@ -4,8 +4,7 @@ from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.core.logging import setup_logging, get_logger
-from app.ml_bridge.model_loader import model_loader
-from app.ml_bridge.inference import inference_engine
+from services.ml_service import ml_service
 from app.api.routes import predict, explain, health
 
 # Setup logging
@@ -23,12 +22,9 @@ async def lifespan(app: FastAPI):
     logger.info("Starting up Explainable AI Lite API...")
     try:
         # Load ML models (singleton pattern - loads once)
-        model_loader.load_models()
+        ml_service.load_model()
         
-        # Initialize inference engine
-        inference_engine.initialize()
-        
-        logger.info("Models loaded and inference engine initialized successfully")
+        logger.info("ML service initialized successfully")
     except Exception as e:
         logger.error(f"Failed to load models: {e}")
         raise
