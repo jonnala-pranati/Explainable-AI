@@ -236,10 +236,10 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a
-                      href="mailto:hello@ai-lite.com"
+                      href="mailto:jonnala.pranati@gmail.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      hello@ai-lite.com
+                      jonnala.pranati@gmail.com
                     </a>
                   </div>
                 </div>
@@ -253,7 +253,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Location</h3>
-                    <p className="text-muted-foreground">India</p>
+                    <p className="text-muted-foreground">Chirec, Hyderabad, Telangana, India</p>
                   </div>
                 </div>
               </div>
@@ -265,7 +265,7 @@ export default function Contact() {
                     <span className="text-white font-bold text-lg">P</span>
                   </div>
                   <div>
-                    <h3 className="font-semibold">Pranati</h3>
+                    <h3 className="font-semibold">Pranati Jonalla</h3>
                     <p className="text-sm text-muted-foreground">Project Owner</p>
                   </div>
                 </div>
