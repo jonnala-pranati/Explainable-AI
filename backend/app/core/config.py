@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api/v1"
     
     # CORS Configuration
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173", "https://explainable-ai-lite.vercel.app", "http://localhost:8080"]
     
     # Model Configuration
     MODEL_PATH: str = "model/model.pkl"
