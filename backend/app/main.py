@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+import os
 
 from app.core.config import settings
 from app.core.logging import setup_logging, get_logger
@@ -73,10 +74,12 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    
     
     uvicorn.run(
         "app.main:app",
-        host="0.0.0.0",
+        host=port.0.0",
         port=8000,
         reload=True,
         log_level=settings.LOG_LEVEL.lower()
