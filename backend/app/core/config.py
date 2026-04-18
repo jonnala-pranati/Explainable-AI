@@ -11,7 +11,24 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api/v1"
     
     # CORS Configuration
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173", "https://explainable-ai-lite.vercel.app", "http://localhost:8080"]
+    CORS_ORIGINS: Union[list[str], str] = ["http://localhost:3000", "http://localhost:5173", "https://explainable-ai-lite.vercel.app", "http://localhost:8080"]
+    
+    @field_validator('CORS_ORIGINS', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        if isinstance(v, str):
+            if v.startswith('['):
+                # JSON-like format
+                import json
+                try:
+                    return json.loads(v)
+                except json.JSONDecodeError:
+                    # Fallback to comma-separated
+                    return [origin.strip() for origin in v.split(',')]
+            else:
+                # Comma-separated format
+                return [origin.strip() for origin in v.split(',')]
+        return v
     
     # Model Configuration
     MODEL_PATH: str = "model/model.pkl"
