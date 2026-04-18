@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     API_VERSION: str = "1.0.0"
     API_PREFIX: str = "/api/v1"
     
-    # CORS Configuration (comma-separated string)
+    # CORS Configuration (comma-separated string for Render compatibility)
     CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173,https://explainable-ai-lite.vercel.app,http://localhost:8080"
     
     @property
