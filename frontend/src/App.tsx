@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 const Home = lazy(() => import("./pages/Home"));
 const Analyze = lazy(() => import("./pages/Analyze"));
+const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/analyze" element={<Analyze />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

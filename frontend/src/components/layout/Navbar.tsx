@@ -6,6 +6,7 @@ import { Brain, Menu, X } from "lucide-react";
 const navItems = [
   { label: "Home", path: "/" },
   { label: "Analyze", path: "/analyze" },
+  { label: "Contact", path: "/contact" },
 ];
 
 export default function Navbar() {
